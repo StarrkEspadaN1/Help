@@ -1,0 +1,13 @@
+/// <summary>
+/// Интерфейс для простого многоугольника.
+/// </summary>
+public interface ISimplePolygon
+{
+    double Height { get; }          // Высота
+    double Base { get; }            // Основание
+    double AngleBetweenDiagonalAndSide { get; } // Угол между диагональю и смежной стороной (в градусах)
+    int SidesCount { get; }         // Количество сторон
+    double[] SideLengths { get; }   // Длины сторон
+    double Area { get; }
+    double Perimeter { get; }
+}
