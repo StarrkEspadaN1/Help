@@ -1,0 +1,28 @@
+public class Square : GeometricFigure, ISimplePolygon
+{
+    public double Side { get; }
+    public Square(double side)
+    {
+        if (side <= 0) throw new ArgumentException("Сторона должна быть положительной.");
+        Side = side;
+    }
+    public override double Area => Side * Side;
+    public override double Perimeter => 4 * Side;
+    public double Height => Side;
+    public double Base => Side;
+    public double AngleBetweenDiagonalAndSide => 45;
+    public int SidesCount => 4;
+    public double[] SideLengths => new[] { Side, Side, Side, Side };
+
+    public override void Draw(int originX, int originY, ConsoleColor color)
+    {
+        int size = (int)Math.Round(Side);
+        Console.ForegroundColor = color;
+        for (int i = 0; i < size; i++)
+        {
+            Console.SetCursorPosition(originX, originY + i);
+            Console.Write(new string('*', size));
+        }
+        Console.ResetColor();
+    }
+}
