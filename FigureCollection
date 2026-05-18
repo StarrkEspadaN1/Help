@@ -1,0 +1,21 @@
+public class FigureCollection : IEnumerable<GeometricFigure>
+{
+    private List<GeometricFigure> _figures = new();
+
+    public void Add(GeometricFigure figure) => _figures.Add(figure);
+
+    public void DisplayAll()
+    {
+        // Очищаем экран и отображаем все фигуры, каждая рисуется со своим цветом/позицией
+        Console.Clear();
+        foreach (var fig in _figures)
+        {
+            // Здесь должна быть логика вызова Draw с параметрами, сохранёнными ранее
+            // Для простоты предположим, что каждая фигура хранит свои координаты и цвет
+            // В реальном приложении стоит добавить свойства X, Y, Color в базовый класс.
+        }
+    }
+
+    public IEnumerator<GeometricFigure> GetEnumerator() => _figures.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
