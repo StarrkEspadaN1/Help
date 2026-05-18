@@ -1,0 +1,8 @@
+public abstract class GeometricFigure
+{
+    public abstract double Area { get; }
+    public abstract double Perimeter { get; }
+
+    // Рисование фигуры на консоли с заданной позицией и цветом
+    public abstract void Draw(int originX, int originY, ConsoleColor color);
+}
