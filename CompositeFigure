@@ -1,0 +1,16 @@
+public class CompositeFigure : GeometricFigure
+{
+    private List<ISimplePolygon> _figures = new();
+
+    public void Add(ISimplePolygon figure) => _figures.Add(figure);
+
+    public override double Area => _figures.Sum(f => f.Area);
+    public override double Perimeter => _figures.Sum(f => f.Perimeter);
+
+    public override void Draw(int originX, int originY, ConsoleColor color)
+    {
+        foreach (var fig in _figures)
+            if (fig is GeometricFigure gf)
+                gf.Draw(originX, originY, color);
+    }
+}
