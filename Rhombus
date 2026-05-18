@@ -1,0 +1,39 @@
+public class Rhombus : GeometricFigure, ISimplePolygon
+{
+    public double Diagonal1 { get; }
+    public double Diagonal2 { get; }
+    public double Side => Math.Sqrt(Diagonal1 * Diagonal1 + Diagonal2 * Diagonal2) / 2;
+
+    public Rhombus(double d1, double d2)
+    {
+        if (d1 <= 0 || d2 <= 0) throw new ArgumentException("Диагонали должны быть положительными.");
+        Diagonal1 = d1; Diagonal2 = d2;
+    }
+    public override double Area => (Diagonal1 * Diagonal2) / 2;
+    public override double Perimeter => 4 * Side;
+
+    // Для ISimplePolygon
+    public double Height => Area / Base;
+    public double Base => Side;
+    public double AngleBetweenDiagonalAndSide => Math.Atan(Diagonal2 / Diagonal1) * 180 / Math.PI;
+    public int SidesCount => 4;
+    public double[] SideLengths => new[] { Side, Side, Side, Side };
+
+    public override void Draw(int originX, int originY, ConsoleColor color)
+    {
+        int d1 = (int)Math.Round(Diagonal1);
+        int d2 = (int)Math.Round(Diagonal2);
+        int centerX = originX + d1 / 2;
+        int centerY = originY + d2 / 2;
+        Console.ForegroundColor = color;
+        for (int y = 0; y < d2; y++)
+        {
+            int offset = (int)((double)(y - d2 / 2) * d1 / d2);
+            int startX = centerX - Math.Abs(offset);
+            int endX = centerX + Math.Abs(offset);
+            Console.SetCursorPosition(startX, originY + y);
+            for (int x = startX; x <= endX; x++) Console.Write('*');
+        }
+        Console.ResetColor();
+    }
+}
