@@ -1,0 +1,104 @@
+public static class GeometryApp
+{
+    private static List<(GeometricFigure fig, int x, int y, ConsoleColor color)> _shapes = new();
+
+    public static void Run()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("=== ГЕОМЕТРИЧЕСКИЙ РЕДАКТОР ===");
+            Console.WriteLine("1. Добавить прямоугольник");
+            Console.WriteLine("2. Добавить квадрат");
+            Console.WriteLine("3. Добавить треугольник");
+            Console.WriteLine("4. Добавить ромб");
+            Console.WriteLine("5. Добавить трапецию");
+            Console.WriteLine("6. Добавить параллелограмм");
+            Console.WriteLine("7. Добавить круг");
+            Console.WriteLine("8. Добавить эллипс");
+            Console.WriteLine("9. Показать все фигуры");
+            Console.WriteLine("0. Выход");
+            Console.Write("Выбор: ");
+            string choice = Console.ReadLine();
+
+            if (choice == "0") break;
+
+            if (choice == "9")
+            {
+                Console.Clear();
+                foreach (var (fig, x, y, color) in _shapes)
+                {
+                    fig.Draw(x, y, color);
+                }
+                Console.SetCursorPosition(0, 25);
+                Console.WriteLine("Нажмите любую клавишу для продолжения...");
+                Console.ReadKey();
+                continue;
+            }
+
+            // Ввод общих параметров: координаты и цвет
+            Console.Write("X (левый верхний угол): ");
+            int x = int.Parse(Console.ReadLine());
+            Console.Write("Y: ");
+            int y = int.Parse(Console.ReadLine());
+            Console.Write("Цвет (0..15): ");
+            ConsoleColor color = (ConsoleColor)int.Parse(Console.ReadLine());
+
+            try
+            {
+                GeometricFigure fig = null;
+                switch (choice)
+                {
+                    case "1":
+                        Console.Write("Ширина: "); double w = double.Parse(Console.ReadLine());
+                        Console.Write("Высота: "); double h = double.Parse(Console.ReadLine());
+                        fig = new Rectangle(w, h);
+                        break;
+                    case "2":
+                        Console.Write("Сторона: "); double s = double.Parse(Console.ReadLine());
+                        fig = new Square(s);
+                        break;
+                    case "3":
+                        Console.Write("Сторона A: "); double a = double.Parse(Console.ReadLine());
+                        Console.Write("Сторона B: "); double b = double.Parse(Console.ReadLine());
+                        Console.Write("Сторона C: "); double c = double.Parse(Console.ReadLine());
+                        fig = new Triangle(a, b, c);
+                        break;
+                    case "4":
+                        Console.Write("Диагональ 1: "); double d1 = double.Parse(Console.ReadLine());
+                        Console.Write("Диагональ 2: "); double d2 = double.Parse(Console.ReadLine());
+                        fig = new Rhombus(d1, d2);
+                        break;
+                    case "5":
+                        Console.Write("Основание 1: "); double base1 = double.Parse(Console.ReadLine());
+                        Console.Write("Основание 2: "); double base2 = double.Parse(Console.ReadLine());
+                        Console.Write("Высота: "); double ht = double.Parse(Console.ReadLine());
+                        fig = new Trapezoid(base1, base2, ht);
+                        break;
+                    case "6":
+                        Console.Write("Основание: "); double baseLen = double.Parse(Console.ReadLine());
+                        Console.Write("Высота: "); double height = double.Parse(Console.ReadLine());
+                        Console.Write("Угол при основании (градусы): "); double angle = double.Parse(Console.ReadLine());
+                        fig = new Parallelogram(baseLen, height, angle);
+                        break;
+                    case "7":
+                        Console.Write("Радиус: "); double r = double.Parse(Console.ReadLine());
+                        fig = new Circle(r);
+                        break;
+                    case "8":
+                        Console.Write("Большая полуось: "); double maj = double.Parse(Console.ReadLine());
+                        Console.Write("Малая полуось: "); double min = double.Parse(Console.ReadLine());
+                        fig = new Ellipse(maj, min);
+                        break;
+                }
+                if (fig != null)
+                    _shapes.Add((fig, x, y, color));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+                Console.ReadKey();
+            }
+        }
+    }
+}
